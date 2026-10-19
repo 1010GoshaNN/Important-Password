@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Password</title>
+</head>
+<!-- css -->
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif, Verdana;
+    background: linear-gradient(160deg, #b2b240 0%, #c08123 100%);
+    margin: 0;
+    height: 100dvh;
+    color: #333;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+    visibility: hidden;
+}
+
+.secretbox {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    background: #f4f4f4;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    word-break: break-all;
+    border: 2px dashed #bfc4ca;
+    color: #2d3440;
+}
+
+.btn {
+    background: #38a169;
+    color: white;
+    border: none;
+    transition: background 0.3s;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 12px 25px;
+}
+
+.btn:hover {
+    background: #2f855a;
+}
+
+.status {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #a0aec0;
+}
+</style>
+<body>
+
+<!-- html-->
+
+<div class="card"></div>
+<div id="Box" class="secretbox">******</div>
+<button class="btn" onclick="Password()">Change Password</button>
+<div class="status" id="newStatus">New Password:</div>
+
+<!-- JS-->
+<script>
+const box = document.getElementById('Box');
+const status = document.getElementById('newStatus');
+
+function NewPassword() {
+    const savedPass = localStorage.getItem('SinglePassword');
+
+    if (savedPass) {
+        box.innerText = savedPass;
+    } else {
+        box.innerText = "Nothing to show";
+    }
+}
+
+function Password() {
+    let string = prompt("Enter new password");
+
+    if (string !== null && string.trim() !== "") {
+        if (string.indexOf(' ') == 0 || string.includes('%')) {
+            alert("Error: Space and % are not allowed");
+            return;
+        }
+        localStorage.setItem('SinglePassword', string.trim());
+        box.innerText = string.trim();
+        status.innerText = "Password is up to date";
+        status.style.color = "#38a168";
+
+    setTimeout(() => {
+        status.innerText = " New Password";
+        status.style.color = "#a0aec0";
+    }, 2000);
+    } else if (string !== null) {
+        alert("Sorry, bur Password should be filled!")
+    }
+}
+
+NewPassword();
+</script>
+
+</body>
+</html>
